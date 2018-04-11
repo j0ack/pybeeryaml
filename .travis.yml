@@ -1,0 +1,12 @@
+language: python
+python:
+  - '3.7-dev'
+  - '3.6'
+
+install:
+  - pip install -r REQUIREMENTS.txt
+  - pip install pytest flake8
+
+script:
+  - python -m pytest -vv tests
+  - flake8

@@ -19,7 +19,7 @@
 
 
 from yaml import safe_load
-from pybeeryaml import BeerComponent
+from pybeeryaml.meta import BeerComponent
 
 RECIPE_FIELDS = ["name", "brewer", "batch_size", "boil_time"]
 HOP_FIELDS = ["name", "alpha", "amount", "use", "time"]
@@ -59,7 +59,8 @@ class Recipe(BeerComponent):
             for mdata in miscs
         ]
 
-        self.mash = BeerComponent("mash", data.get("mash", {}), MASH_FIELDS)
+        self.mash = BeerComponent("mash", data.get("mash", {"name": "mash"}),
+                                  MASH_FIELDS)
         steps = []
         if hasattr(self.mash, "mash_steps"):
             msdata = self.flatten(self.mash.mash_steps)
@@ -83,7 +84,7 @@ class Recipe(BeerComponent):
         return output
 
     @classmethod
-    def from_file(cls, filepath: str) -> Recipe:
+    def from_file(cls, filepath: str):
         """Create recipe from YAML file
 
         :param filepath: YAML file containing recipe data
@@ -93,9 +94,9 @@ class Recipe(BeerComponent):
         return cls(data)
 
     @classmethod
-    def from_yaml(cls, data: str) -> Recipe:
+    def from_yaml(cls, data: str):
         """Create recipe from YAML data
 
         :param data: YAML recipe data
         """
-        return cls(data)
+        return cls(safe_load(data))

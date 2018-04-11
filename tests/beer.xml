@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<RECIPE>
+  <VERSION>1</VERSION>
+  <NAME>Dry Stout</NAME>
+  <TYPE>All Grain</TYPE>
+  <BREWER>Brad Smith</BREWER>
+  <DATE>3 jan 04</DATE>
+  <STYLE>Dry Stout</STYLE>
+  <BATCH_SIZE>18.93</BATCH_SIZE>
+  <BOIL_SIZE>20.82</BOIL_SIZE>
+  <BOIL_TIME>60.0</BOIL_TIME>
+  <HOPS>
+    <HOP>
+      <VERSION>1</VERSION>
+      <NAME>Goldings, East Kent</NAME>
+      <ALPHA>5.0</ALPHA>
+      <AMOUNT>0.0638</AMOUNT>
+      <USE>boil</USE>
+      <TIME>60.0</TIME>
+      <NOTES>Great all purpose uk hop for ales, stouts, porters</NOTES>
+    </HOP>
+  </HOPS>
+  <FERMENTABLES>
+    <FERMENTABLE>
+      <VERSION>1</VERSION>
+      <NAME>Pale Malt (2 row) UK</NAME>
+      <AMOUNT>2.27</AMOUNT>
+      <TYPE>Grain</TYPE>
+      <YIELD>78.0</YIELD>
+      <COLOR>3.0</COLOR>
+      <NOTES>All purpose base malt for English styles</NOTES>
+    </FERMENTABLE>
+    <FERMENTABLE>
+      <VERSION>1</VERSION>
+      <NAME>Barley, Flaked</NAME>
+      <AMOUNT>0.91</AMOUNT>
+      <TYPE>Grain</TYPE>
+      <YIELD>70.0</YIELD>
+      <COLOR>2.0</COLOR>
+      <NOTES>Adds body to porters and stouts, must be mashed</NOTES>
+    </FERMENTABLE>
+  </FERMENTABLES>
+  <YEASTS>
+    <YEAST>
+      <VERSION>1</VERSION>
+      <NAME>Irish Ale</NAME>
+      <FORM>Liquid</FORM>
+      <AMOUNT>0.25</AMOUNT>
+      <TYPE>Ale</TYPE>
+    </YEAST>
+  </YEASTS>
+  <MASH>
+    <VERSION>1</VERSION>
+    <NAME>single step infusion, 68 c</NAME>
+    <MASH_STEPS>
+      <MASH_STEP>
+        <VERSION>1</VERSION>
+        <TYPE>Infusion</TYPE>
+        <NAME>Conversion Step, 68C</NAME>
+        <STEP_TIME>60.0</STEP_TIME>
+        <STEP_TEMP>68.0</STEP_TEMP>
+      </MASH_STEP>
+    </MASH_STEPS>
+  </MASH>
+  <MISCS/>
+</RECIPE>

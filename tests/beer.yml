@@ -1,0 +1,43 @@
+name: Dry Stout
+type: All Grain
+brewer: Brad Smith
+batch_size: 18.93
+boil_size: 20.82
+boil_time: 60.0
+date: 3 jan 04
+style: Dry Stout
+hops:
+   Goldings, East Kent:
+     alpha: 5.0
+     amount: 0.0638
+     use: boil
+     time: 60.0
+     notes: Great all purpose uk hop for ales, stouts, porters
+
+fermentables:
+  Pale Malt (2 row) UK:
+    amount: 2.27
+    type: Grain
+    yield: 78.0
+    color: 3.0
+    notes: All purpose base malt for English styles
+  Barley, Flaked:
+   amount: 0.91
+   type: Grain
+   yield: 70.0
+   color: 2.0
+   notes: Adds body to porters and stouts, must be mashed
+
+yeasts:
+ Irish Ale:
+   type: Ale
+   form: Liquid
+   amount: 0.25
+
+mash:
+  name: single step infusion, 68 c
+  mash_steps:
+    Conversion Step, 68C:
+      type: Infusion
+      step_temp: 68.0
+      step_time: 60.0
