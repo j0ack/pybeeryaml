@@ -20,6 +20,8 @@
 
 import os.path
 import xml.etree.ElementTree as ET
+from yaml import safe_load
+from copy import copy
 from pybeeryaml import Recipe
 
 
@@ -110,6 +112,7 @@ def test_recipe_from_yaml():
         time: 20.0
     fermentables:
       test2:
+        yield: 78.0
         type: Grain
         amount: 10.0
         color: 5.0
@@ -145,3 +148,23 @@ def test_xml_export():
     xml2 = ET.parse(xml_path).getroot()
 
     assert xmltodict(xml) == xmltodict(xml2)
+
+
+def test_yaml_export():
+    # remove version keys
+    def remove_keys(data):
+        output = copy(data)
+        for key, value in data.items():
+            if key == "version":
+                del output[key]
+            if isinstance(value, dict):
+                output[key] = remove_keys(value)
+        return output
+
+    recipe_path = os.path.join(os.path.dirname(__file__), "beer.yml")
+    recipe = Recipe.from_file(recipe_path)
+
+    with open(recipe_path, "r") as fi:
+        data = safe_load(fi.read())
+
+    assert data == remove_keys(recipe.to_yaml())

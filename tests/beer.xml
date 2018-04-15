@@ -52,6 +52,7 @@
   <MASH>
     <VERSION>1</VERSION>
     <NAME>single step infusion, 68 c</NAME>
+    <GRAIN_TEMP>25°C</GRAIN_TEMP>
     <MASH_STEPS>
       <MASH_STEP>
         <VERSION>1</VERSION>
@@ -63,4 +64,5 @@
     </MASH_STEPS>
   </MASH>
   <MISCS/>
+  <WATERS/>
 </RECIPE>

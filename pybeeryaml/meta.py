@@ -19,28 +19,18 @@
 
 
 import keyword
-try:
-    from lxml import etree as ET
-except ImportError:
-    import xml.etree.ElementTree as ET
+import xml.etree.ElementTree as ET
 
 
 class BeerComponent:
-    """Base class for beer component
+    """Base class for beer component"""
 
-    :param objname: object name
-    :param data: object data
-    :param mandatory_fields: mandatory_fields
-    """
-
-    def __init__(self, objname: str, data: dict, mandatory_fields: list):
+    def __init__(self, objname=None, **kwargs):
         self.version = 1
-        self._objname = objname
-        self._mandatory_fields = mandatory_fields
+        self._objname = objname or self.__class__.__name__
 
-        for field in self._mandatory_fields:
-            setattr(self, field, data.pop(field))
-
+    def set(self, data: dict):
+        """Set optional data"""
         for key, value in data.items():
             if isinstance(value, list):
                 continue
@@ -49,6 +39,29 @@ class BeerComponent:
                 key = f"beeryaml_{key}"
 
             setattr(self, key, value)
+
+    def to_yaml(self) -> dict:
+        """Convert object to YAML dict"""
+        output = {}
+        output[self.name] = {}
+
+        for key, value in self.__dict__.items():
+            if key.startswith("_") or key == "name":
+                continue
+            elif key.startswith("beeryaml_"):
+                key = key[9:]
+
+            if isinstance(value, BeerComponent):
+                data = value.to_yaml()
+                output[self.name].update(data)
+            elif isinstance(value, list):
+                output[self.name][key] = {}
+                for elt in value:
+                    output[self.name][key].update(elt.to_yaml())
+            else:
+                output[self.name][key] = value
+
+        return output
 
     def to_xml(self) -> str:
         """Convert to beerxml format"""

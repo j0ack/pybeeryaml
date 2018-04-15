@@ -19,15 +19,15 @@
 
 
 from yaml import safe_load
+from keyword import iskeyword
+from pybeeryaml.hop import Hop
+from pybeeryaml.yeast import Yeast
 from pybeeryaml.meta import BeerComponent
-
-RECIPE_FIELDS = ["name", "brewer", "batch_size", "boil_time"]
-HOP_FIELDS = ["name", "alpha", "amount", "use", "time"]
-YEAST_FIELDS = ["name", "type", "form", "amount"]
-FERMENTABLE_FIELDS = ["name", "type", "amount", "color"]
-MISC_FIELDS = ["name", "type", "use", "time", "amount"]
-MASH_FIELDS = ["name"]
-MASH_STEP_FIELDS = ["name", "type", "step_time", "step_temp"]
+from pybeeryaml.misc import Misc
+from pybeeryaml.water import Water
+from pybeeryaml.style import Style
+from pybeeryaml.fermentable import Fermentable
+from pybeeryaml.mash import MashProfile, MashStep
 
 
 class Recipe(BeerComponent):
@@ -37,39 +37,37 @@ class Recipe(BeerComponent):
     """
 
     def __init__(self, data: dict):
-        super().__init__("recipe", data, RECIPE_FIELDS)
+        super().__init__()
+        self.set(data)
+
+        if hasattr(self, "style") and isinstance(self.style, dict):
+            self.style = Style(**data["style"])
 
         hops = self.flatten(data.get("hops", {}))
-        self.hops = [BeerComponent("hop", hdata, HOP_FIELDS) for hdata in hops]
+        self.hops = [Hop(**hdata) for hdata in hops]
 
         yeasts = self.flatten(data.get("yeasts", {}))
-        self.yeasts = [
-            BeerComponent("yeast", ydata, YEAST_FIELDS) for ydata in yeasts
-        ]
+        self.yeasts = [Yeast(**ydata) for ydata in yeasts]
 
         ferments = self.flatten(data.get("fermentables", {}))
-        self.fermentables = [
-            BeerComponent("fermentable", fdata, FERMENTABLE_FIELDS)
-            for fdata in ferments
-        ]
+        self.fermentables = [Fermentable(**fdata) for fdata in ferments]
 
         miscs = self.flatten(data.get("miscs", {}))
-        self.miscs = [
-            BeerComponent("misc", mdata, MISC_FIELDS)
-            for mdata in miscs
-        ]
+        self.miscs = [Misc(**mdata) for mdata in miscs]
 
-        self.mash = BeerComponent("mash", data.get("mash", {"name": "mash"}),
-                                  MASH_FIELDS)
+        profile = data.get("mash", {"name": "mash", "grain_temp": 25})
+        self.mash = MashProfile(**profile)
+
         steps = []
         if hasattr(self.mash, "mash_steps"):
             msdata = self.flatten(self.mash.mash_steps)
             for mash_step in msdata:
-                steps.append(
-                    BeerComponent("mash_step", mash_step, MASH_STEP_FIELDS)
-                )
+                steps.append(MashStep(**mash_step))
 
         self.mash.mash_steps = steps
+
+        waters = self.flatten(data.get("waters", {}))
+        self.waters = [Water(wdata) for wdata in waters]
 
     def flatten(self, data: dict) -> list:
         """Flatten yaml dict
@@ -80,8 +78,41 @@ class Recipe(BeerComponent):
         for key, value in data.items():
             if isinstance(value, dict):
                 value["name"] = key
+
+                for vkey, vvalue in value.items():
+                    if iskeyword(vkey):
+                        value[f"beeryaml_{vkey}"] = vvalue
+                        del value[vkey]
+
             output.append(value)
         return output
+
+    def to_yaml(self) -> dict:
+        """Convert object to YAML dict"""
+        output = {}
+
+        for key, value in self.__dict__.items():
+            if key.startswith("_"):
+                continue
+            elif key.startswith("beeryaml_"):
+                key = key[9:]
+
+            if value:
+                if isinstance(value, BeerComponent) and key != "mash":
+                    data = value.to_yaml()
+                    output.update(data)
+                elif isinstance(value, list):
+                    output[key] = {}
+                    for elt in value:
+                        output[key].update(elt.to_yaml())
+                else:
+                    output[key] = value
+
+        # mash
+        output["mash"] = self.mash.to_yaml()
+
+        return output
+
 
     @classmethod
     def from_file(cls, filepath: str):

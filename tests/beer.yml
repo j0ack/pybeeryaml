@@ -36,6 +36,7 @@ yeasts:
 
 mash:
   name: single step infusion, 68 c
+  grain_temp: 25°C
   mash_steps:
     Conversion Step, 68C:
       type: Infusion
