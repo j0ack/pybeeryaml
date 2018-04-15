@@ -19,9 +19,19 @@
 
 
 from pybeeryaml.recipe import Recipe
+from pybeeryaml.hop import Hop
+from pybeeryaml.yeast import Yeast
+from pybeeryaml.misc import Misc
+from pybeeryaml.water import Water
+from pybeeryaml.style import Style
+from pybeeryaml.fermentable import Fermentable
+from pybeeryaml.mash import MashProfile, MashStep
 
 
-__all__ = ["Recipe"]
+__all__ = ["Recipe", "Hop", "Yeast", "Misc", "Water", "Style", "Fermentable",
+           "MashProfile", "MashStep", "__version__", "__author__", "__url__",
+           "__email__"]
 __version__ = "1.0"
-__author__ = "TROUVERIE Joachim <joachim.trouverie@linoame.fr>"
+__author__ = "TROUVERIE Joachim"
+__email__ = "joachim.trouverie@linoame.fr"
 __url__ = "https://github.com/j0ack/pybeeryaml"

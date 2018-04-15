@@ -113,7 +113,6 @@ class Recipe(BeerComponent):
 
         return output
 
-
     @classmethod
     def from_file(cls, filepath: str):
         """Create recipe from YAML file
