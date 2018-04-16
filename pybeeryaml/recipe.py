@@ -36,11 +36,20 @@ class Recipe(BeerComponent):
     :param data: dict recipe data
     """
 
-    def __init__(self, data: dict):
+    def __init__(self, name, type, style, brewer, batch_size, boil_size,
+                 boil_time, **data: dict):
         super().__init__()
+        self.name = name
+        self.type = type
+        self.style = style
+        self.brewer = brewer
+        self.batch_size = batch_size
+        self.boil_size = boil_size
+        self.boil_time = boil_time
+
         self.set(data)
 
-        if hasattr(self, "style") and isinstance(self.style, dict):
+        if isinstance(self.style, dict):
             self.style = Style(**data["style"])
 
         hops = self.flatten(data.get("hops", {}))
@@ -121,7 +130,7 @@ class Recipe(BeerComponent):
         """
         with open(filepath, "r") as fi:
             data = safe_load(fi.read())
-        return cls(data)
+        return cls(**data)
 
     @classmethod
     def from_yaml(cls, data: str):
@@ -129,4 +138,4 @@ class Recipe(BeerComponent):
 
         :param data: YAML recipe data
         """
-        return cls(safe_load(data))
+        return cls(**safe_load(data))

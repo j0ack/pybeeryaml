@@ -102,8 +102,11 @@ def test_recipe_from_yaml():
     minimal_yaml = """
     name: Test
     brewer: TROUVERIE Joachim
+    type: Pale Ale
     batch_size: 10.0
     boil_time: 60.0
+    boil_size: 15.0
+    style: Test
     hops:
       test:
         alpha: 3.50
@@ -120,8 +123,11 @@ def test_recipe_from_yaml():
     recipe = Recipe.from_yaml(minimal_yaml)
     assert recipe.name == "Test"
     assert recipe.brewer == "TROUVERIE Joachim"
+    assert recipe.type == "Pale Ale"
+    assert recipe.boil_size == 15.0
     assert recipe.batch_size == 10.0
     assert recipe.boil_time == 60.0
+    assert recipe.style == "Test"
 
     assert len(recipe.hops) == 1
     hop = recipe.hops[0]
@@ -135,6 +141,7 @@ def test_recipe_from_yaml():
     fermentable = recipe.fermentables[0]
     assert fermentable.name == "test2"
     assert fermentable.type == "Grain"
+    assert fermentable.beeryaml_yield == 78.0
     assert fermentable.amount == 10.0
     assert fermentable.color == 5.0
 
