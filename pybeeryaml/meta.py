@@ -36,7 +36,7 @@ class BeerComponent:
                 continue
 
             if keyword.iskeyword(key):
-                key = f"beeryaml_{key}"
+                key = "beeryaml_{}".format(key)
 
             setattr(self, key, value)
 

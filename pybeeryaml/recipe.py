@@ -90,7 +90,7 @@ class Recipe(BeerComponent):
 
                 for vkey, vvalue in value.items():
                     if iskeyword(vkey):
-                        value[f"beeryaml_{vkey}"] = vvalue
+                        value["beeryaml_{}".format(vkey)] = vvalue
                         del value[vkey]
 
             output.append(value)
