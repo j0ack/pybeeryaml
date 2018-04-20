@@ -3,15 +3,20 @@ PyBeerYAML
 
 |pyversion| |version| |license| |travis|
 
-A YAML format parser for beer storage.
+A Python YAML format parser for beer storage.
 
-Parse a recipe from a YAML file and returns an object containing ingredients and
-metadata. Supports export to `beerxml <http://beerxml.com/>`_ format.
+Parse a recipe from a `beeryaml <http://beeryaml.rtfd.io/>`_ file and returns
+an object containing ingredients and metadata. Supports export to
+`beerxml <http://beerxml.io/>`_ format.
+
+For more information about the beeryaml format please read the following
+documentation:
+
+http://beeryaml.rtfd.io/
 
 .. toctree::
    :maxdepth: 1
 
-   yaml_format
    quickstart
    contribute
    api/pybeeryaml

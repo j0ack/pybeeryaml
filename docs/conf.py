@@ -12,9 +12,9 @@
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
-# import os
-# import sys
-# sys.path.insert(0, os.path.abspath('.'))
+import os
+import sys
+sys.path.insert(0, os.path.abspath('..'))
 
 
 # -- Project information -----------------------------------------------------
@@ -76,7 +76,7 @@ pygments_style = 'sphinx'
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = 'flask'
+html_theme = 'alabaster'
 
 html_context = {
     "css_files": ["_static/index.css"]
@@ -87,7 +87,9 @@ html_context = {
 # documentation.
 #
 html_theme_options = {
-    "github_fork": "j0ack/pybeeryaml",
+    'github_user': 'j0ack',
+    'github_repo': 'pybeeryaml',
+    'github_banner': True
 }
 
 # Add any paths that contain custom static files (such as style sheets) here,
