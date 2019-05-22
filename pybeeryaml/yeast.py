@@ -22,6 +22,7 @@ from pybeeryaml.meta import BeerComponent
 
 
 class Yeast(BeerComponent):
+    """Yeast class"""
 
     def __init__(self, name, type, form, amount, **kwargs):
         super().__init__()

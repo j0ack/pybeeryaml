@@ -22,9 +22,21 @@ from pybeeryaml.meta import BeerComponent
 
 
 class Water(BeerComponent):
+    """Water class"""
 
-    def __init__(self, name, amount, calcium, bicarbonate, sulfate, chloride,
-                 sodium, magnesium, ph, **kwargs):
+    def __init__(
+        self,
+        name,
+        amount,
+        calcium,
+        bicarbonate,
+        sulfate,
+        chloride,
+        sodium,
+        magnesium,
+        ph,
+        **kwargs
+    ):
         super().__init__()
 
         self.name = name

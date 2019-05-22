@@ -22,6 +22,7 @@ from pybeeryaml.meta import BeerComponent
 
 
 class Misc(BeerComponent):
+    """Misc class"""
 
     def __init__(self, name, type, use, time, amount, **kwargs):
         super().__init__()

@@ -18,26 +18,34 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-from yaml import safe_load
 from keyword import iskeyword
+
+from yaml import safe_load
+
+from pybeeryaml.fermentable import Fermentable
 from pybeeryaml.hop import Hop
-from pybeeryaml.yeast import Yeast
+from pybeeryaml.mash import MashProfile, MashStep
 from pybeeryaml.meta import BeerComponent
 from pybeeryaml.misc import Misc
-from pybeeryaml.water import Water
 from pybeeryaml.style import Style
-from pybeeryaml.fermentable import Fermentable
-from pybeeryaml.mash import MashProfile, MashStep
+from pybeeryaml.water import Water
+from pybeeryaml.yeast import Yeast
 
 
 class Recipe(BeerComponent):
-    """Recipe model
+    """Recipe model"""
 
-    :param data: dict recipe data
-    """
-
-    def __init__(self, name, type, style, brewer, batch_size, boil_size,
-                 boil_time, **data: dict):
+    def __init__(
+        self,
+        name,
+        type,
+        style,
+        brewer,
+        batch_size,
+        boil_size,
+        boil_time,
+        **data: dict
+    ):
         super().__init__()
         self.name = name
         self.type = type
@@ -52,16 +60,16 @@ class Recipe(BeerComponent):
         if isinstance(self.style, dict):
             self.style = Style(**data["style"])
 
-        hops = self.flatten(data.get("hops", {}))
+        hops = Recipe.flatten(data.get("hops", {}))
         self.hops = [Hop(**hdata) for hdata in hops]
 
-        yeasts = self.flatten(data.get("yeasts", {}))
+        yeasts = Recipe.flatten(data.get("yeasts", {}))
         self.yeasts = [Yeast(**ydata) for ydata in yeasts]
 
-        ferments = self.flatten(data.get("fermentables", {}))
+        ferments = Recipe.flatten(data.get("fermentables", {}))
         self.fermentables = [Fermentable(**fdata) for fdata in ferments]
 
-        miscs = self.flatten(data.get("miscs", {}))
+        miscs = Recipe.flatten(data.get("miscs", {}))
         self.miscs = [Misc(**mdata) for mdata in miscs]
 
         profile = data.get("mash", {"name": "mash", "grain_temp": 25})
@@ -69,24 +77,23 @@ class Recipe(BeerComponent):
 
         steps = []
         if hasattr(self.mash, "mash_steps"):
-            msdata = self.flatten(self.mash.mash_steps)
+            msdata = Recipe.flatten(self.mash.mash_steps)
             for mash_step in msdata:
                 steps.append(MashStep(**mash_step))
 
         self.mash.mash_steps = steps
 
-        waters = self.flatten(data.get("waters", {}))
+        waters = Recipe.flatten(data.get("waters", {}))
         self.waters = [Water(wdata) for wdata in waters]
 
-    def flatten(self, data: dict) -> list:
-        """Flatten yaml dict
-
-        :param data: YAML dict
-        """
+    @classmethod
+    def flatten(cls, data: dict) -> list:
+        """Flatten yaml dict"""
         output = []
         for key, value in data.items():
             if isinstance(value, dict):
-                value["name"] = key
+                if "name" not in value:
+                    value["name"] = key
 
                 for vkey, vvalue in value.items():
                     if iskeyword(vkey):
@@ -124,10 +131,7 @@ class Recipe(BeerComponent):
 
     @classmethod
     def from_file(cls, filepath: str):
-        """Create recipe from YAML file
-
-        :param filepath: YAML file containing recipe data
-        """
+        """Create recipe from YAML file"""
         with open(filepath, "r") as fi:
             data = safe_load(fi.read())
         return cls(**data)

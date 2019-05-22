@@ -22,6 +22,7 @@ from pybeeryaml.meta import BeerComponent
 
 
 class Fermentable(BeerComponent):
+    """Fermentable class"""
 
     def __init__(self, name, type, amount, color, beeryaml_yield, **kwargs):
         super().__init__()

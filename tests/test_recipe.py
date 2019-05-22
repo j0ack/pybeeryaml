@@ -20,8 +20,10 @@
 
 import os.path
 import xml.etree.ElementTree as ET
-from yaml import safe_load
 from copy import copy
+
+from yaml import safe_load
+
 from pybeeryaml import Recipe
 
 
@@ -33,10 +35,9 @@ def xmltodict(data: ET.Element, root=True) -> dict:
             tagname = child.tag
             if tagname in output:
                 tagname = "{}{}".format(
-                    child.tag, len([
-                        k for k in output.keys()
-                        if k.startswith(child.tag)
-                    ]))
+                    child.tag,
+                    len([k for k in output.keys() if k.startswith(child.tag)]),
+                )
             output[tagname] = xmltodict(child, False)
         else:
             output[child.tag] = child.text
@@ -175,3 +176,58 @@ def test_yaml_export():
         data = safe_load(fi.read())
 
     assert data == remove_keys(recipe.to_yaml())
+
+
+def test_flatten():
+    data = {
+        "pale ale": {
+            "type": "Grain",
+            "amount": "4500g",
+            "color": "5.9EBC",
+            "yield": "78.0",
+        },
+        "caramel/crystal": {
+            "type": "Grain",
+            "amount": "350g",
+            "color": "120EBC",
+            "yield": "74.0",
+        },
+    }
+    expected = [
+        {
+            "name": "pale ale",
+            "type": "Grain",
+            "amount": "4500g",
+            "color": "5.9EBC",
+            "beeryaml_yield": "78.0",
+        },
+        {
+            "name": "caramel/crystal",
+            "type": "Grain",
+            "amount": "350g",
+            "color": "120EBC",
+            "beeryaml_yield": "74.0",
+        },
+    ]
+    assert Recipe.flatten(data) == expected
+
+
+def test_flatten_with_same_names():
+    data = {
+        "first hop": {
+            "name": "cascade",
+            "amount": "20g",
+            "use": "boil",
+            "time": "10min",
+            "alpha": "7.5%",
+        },
+        "second hop": {
+            "name": "cascade",
+            "amount": "20g",
+            "use": "boil",
+            "time": "20min",
+            "alpha": "7.5%",
+        },
+    }
+    assert len(Recipe.flatten(data)) == len(data)
+    assert Recipe.flatten(data) == list(data.values())

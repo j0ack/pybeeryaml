@@ -22,6 +22,7 @@ from pybeeryaml.meta import BeerComponent
 
 
 class MashProfile(BeerComponent):
+    """Mash profile class"""
 
     def __init__(self, name, grain_temp, **kwargs):
         super().__init__("mash")
@@ -34,8 +35,7 @@ class MashProfile(BeerComponent):
     def to_yaml(self) -> dict:
         """Convert object to YAML dict"""
         output = {
-            k: v for k, v in self.__dict__.items()
-            if not k.startswith("_")
+            k: v for k, v in self.__dict__.items() if not k.startswith("_")
         }
         output["mash_steps"] = {}
         for step in getattr(self, "mash_steps", []):
@@ -45,6 +45,7 @@ class MashProfile(BeerComponent):
 
 
 class MashStep(BeerComponent):
+    """Mash step class"""
 
     def __init__(self, name, type, step_time, step_temp, **kwargs):
         super().__init__("mash_step")

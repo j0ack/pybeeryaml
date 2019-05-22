@@ -22,10 +22,26 @@ from pybeeryaml.meta import BeerComponent
 
 
 class Style(BeerComponent):
+    """Style class"""
 
-    def __init__(self, name, category, category_number, style_letter,
-                 style_guide, type, og_min, og_max, fg_min, fg_max, ibu_min,
-                 ibu_max, color_min, color_max, **kwargs):
+    def __init__(
+        self,
+        name,
+        category,
+        category_number,
+        style_letter,
+        style_guide,
+        type,
+        og_min,
+        og_max,
+        fg_min,
+        fg_max,
+        ibu_min,
+        ibu_max,
+        color_min,
+        color_max,
+        **kwargs
+    ):
         super().__init__()
 
         self.name = name

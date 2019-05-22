@@ -22,6 +22,7 @@ from pybeeryaml.meta import BeerComponent
 
 
 class Hop(BeerComponent):
+    """Hop class"""
 
     def __init__(self, name, alpha, amount, use, time, **kwargs):
         super().__init__()
