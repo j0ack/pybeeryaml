@@ -1,7 +1,7 @@
 pybeeryaml
 ==========
 
-|version| |license| |travis|
+|version| |license| |drone|
 
 A YAML format parser for beer storage
 
@@ -48,4 +48,4 @@ Unit tests can be run with `pytest <https://docs.pytest.org/en/latest/>`_.
 
 .. |version| image:: https://img.shields.io/pypi/v/pybeeryaml.svg
 .. |license| image:: https://img.shields.io/github/license/j0ack/pybeeryaml.svg
-.. |travis| image::  https://img.shields.io/travis/j0ack/pybeeryaml.svg
+.. |travis| image:: https://drone.joakode.fr/api/badges/joack/pybeeryaml/status.svg

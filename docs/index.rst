@@ -1,7 +1,7 @@
 PyBeerYAML
 ==========
 
-|pyversion| |version| |license| |travis|
+|pyversion| |version| |license| |drone|
 
 A Python YAML format parser for beer storage.
 
@@ -27,5 +27,4 @@ http://beeryaml.rtfd.io/
                :target: https://pypi.python.org/pypi/pybeeryaml/
 .. |license| image:: https://img.shields.io/github/license/j0ack/pybeeryaml.svg
                :target: https://www.gnu.org/licenses/gpl-3.0.txt
-.. |travis| image::  https://img.shields.io/travis/j0ack/pybeeryaml.svg
-               :target: https://travis-ci.org/j0ack/pybeeryaml
+.. |drone| image::  https://drone.joakode.fr/api/badges/joack/pybeeryaml/status.svg
