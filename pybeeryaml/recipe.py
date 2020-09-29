@@ -92,14 +92,16 @@ class Recipe(BeerComponent):
         output = []
         for key, value in data.items():
             if isinstance(value, dict):
+                newvalue = value.copy()
                 if "name" not in value:
-                    value["name"] = key
+                    newvalue["name"] = key
 
                 for vkey, vvalue in value.items():
                     if iskeyword(vkey):
-                        value["beeryaml_{}".format(vkey)] = vvalue
-                        del value[vkey]
+                        newvalue["beeryaml_{}".format(vkey)] = vvalue
+                        del newvalue[vkey]
 
+                value = newvalue
             output.append(value)
         return output
 

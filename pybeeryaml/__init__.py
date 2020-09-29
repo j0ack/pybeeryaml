@@ -43,7 +43,7 @@ __all__ = [
     "__url__",
     "__email__",
 ]
-__version__ = "1.1"
+__version__ = "1.2"
 __author__ = "TROUVERIE Joachim"
-__email__ = "joachim.trouverie@linoame.fr"
+__email__ = "jtrouverie@joakode.fr"
 __url__ = "https://github.com/j0ack/pybeeryaml"
