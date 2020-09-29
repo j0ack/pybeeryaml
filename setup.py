@@ -28,12 +28,15 @@ requirements = []
 for line in open('REQUIREMENTS.txt', 'r'):
     requirements.append(line)
 
+with open('README.rst', 'r') as fi:
+    long_description = fi.read()
+
 setup(
     name="pybeeryaml",
     packages=find_packages(),
     version=__version__,
     description=__doc__,
-    long_description=open('README.rst').read(),
+    long_description=long_description,
     author=__author__,
     author_email=__email__,
     url="https://pythonhosted.org/pybeeryaml/",
@@ -47,6 +50,8 @@ setup(
         "Natural Language :: English",
         "Programming Language :: Python :: 3.5",
         "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
         "Topic :: Utilities",
     ],
 )
