@@ -21,8 +21,11 @@
 
 
 from setuptools import setup, find_packages
-from pybeeryaml import __author__, __url__, __version__, __email__
 
+__version__ = "1.3"
+__author__ = "TROUVERIE Joachim"
+__email__ = "jtrouverie@joakode.fr"
+__url__ = "https://github.com/j0ack/pybeeryaml"
 
 requirements = []
 for line in open('REQUIREMENTS.txt', 'r'):
@@ -37,6 +40,7 @@ setup(
     version=__version__,
     description=__doc__,
     long_description=long_description,
+    long_description_content_type="text/x-rst",
     author=__author__,
     author_email=__email__,
     url="https://pythonhosted.org/pybeeryaml/",

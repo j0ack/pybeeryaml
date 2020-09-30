@@ -38,12 +38,4 @@ __all__ = [
     "Fermentable",
     "MashProfile",
     "MashStep",
-    "__version__",
-    "__author__",
-    "__url__",
-    "__email__",
 ]
-__version__ = "1.2"
-__author__ = "TROUVERIE Joachim"
-__email__ = "jtrouverie@joakode.fr"
-__url__ = "https://github.com/j0ack/pybeeryaml"
